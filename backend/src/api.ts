@@ -3,6 +3,7 @@ import {DATABASE_DEFAULT, db} from './database'
 import {User} from "./model/user";
 import {Wallet} from "./model/wallet";
 import {MovementList} from "./model/movementList";
+import * as jwt from 'jsonwebtoken'
 
 export async function databaseReset(request: Request, h: ResponseToolkit) {
     db.data = DATABASE_DEFAULT
@@ -34,14 +35,16 @@ export async function login(request: Request, h: ResponseToolkit) {
     if (!db.data) {
         return h.response({feedback: "Database error"}).code(500);
     }
-    const user = db.data.users.filter(user => user.email === email);
-    if (user.length === 0) {
+    const userCheck = db.data.users.filter(user => user.email === email);
+    if (userCheck.length === 0) {
         return h.response({feedback: "This account does not exist"}).code(404)
     }
-    if (user[0].password !== password) {
+    const user = userCheck[0]
+    if (user.password !== password) {
         return h.response({feedback: "Incorrect credentials"}).code(401)
     }
-    return h.response({feedback: "Login successful"}).code(200);
+    const token = jwt.sign({userId: user.id}, <string>process.env.JWT_SECRET_KEY)
+    return h.response({feedback: "Login successful"}).code(200).header("Authorization", token);
 }
 
 export async function getFunds(request: Request, h: ResponseToolkit) {
@@ -58,3 +61,4 @@ export async function removeFunds(request: Request, h: ResponseToolkit) {
     console.log(request.payload)
     return h.response("removeFunds").code(200);
 }
+
