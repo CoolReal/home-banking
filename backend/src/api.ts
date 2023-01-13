@@ -29,8 +29,19 @@ export async function subscribe(request: Request, h: ResponseToolkit) {
 }
 
 export async function login(request: Request, h: ResponseToolkit) {
-    console.log(request.payload)
-    return h.response("login").code(200);
+    const {email, password} = JSON.parse(<string>request.payload)
+    await db.read();
+    if (!db.data) {
+        return h.response({feedback: "Database error"}).code(500);
+    }
+    const user = db.data.users.filter(user => user.email === email);
+    if (user.length === 0) {
+        return h.response({feedback: "This account does not exist"}).code(404)
+    }
+    if (user[0].password !== password) {
+        return h.response({feedback: "Incorrect credentials"}).code(401)
+    }
+    return h.response({feedback: "Login successful"}).code(200);
 }
 
 export async function getFunds(request: Request, h: ResponseToolkit) {
