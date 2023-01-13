@@ -14,7 +14,13 @@ export class Movement implements IMovement {
     walletDestinationId: string;
     walletOriginId: string;
 
-    constructor(description: string, id: string, transactionValue: Number, walletDestinationId: string, walletOriginId: string) {
+    constructor(
+        description: string,
+        id: string,
+        transactionValue: Number,
+        walletDestinationId: string,
+        walletOriginId: string
+    ) {
         this.description = description;
         this.id = id;
         this.transactionValue = transactionValue;

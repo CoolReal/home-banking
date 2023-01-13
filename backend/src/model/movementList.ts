@@ -1,11 +1,10 @@
-import {Movement} from "./movement";
-import {v4 as uuidv4} from 'uuid'
-
+import { Movement } from './movement';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface IMovementList {
     id: string;
-    walletId: string
-    movements: Movement[]
+    walletId: string;
+    movements: Movement[];
 }
 
 export class MovementList implements IMovementList {
@@ -16,6 +15,6 @@ export class MovementList implements IMovementList {
     constructor(walletId: string) {
         this.id = uuidv4();
         this.walletId = walletId;
-        this.movements = []
+        this.movements = [];
     }
 }
