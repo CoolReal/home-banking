@@ -3,7 +3,7 @@ import { DATABASE_DEFAULT, db } from './database';
 import { User } from './model/user';
 import { Wallet } from './model/wallet';
 import { MovementList } from './model/movementList';
-import * as jwt from 'jsonwebtoken';
+import * as jwtUtils from './jwtUtils';
 
 export async function databaseReset(request: Request, h: ResponseToolkit) {
     db.data = DATABASE_DEFAULT;
@@ -46,10 +46,7 @@ export async function login(request: Request, h: ResponseToolkit) {
     if (user.password !== password) {
         return h.response({ feedback: 'Incorrect credentials' }).code(401);
     }
-    const token = jwt.sign(
-        { userId: user.id },
-        <string>process.env.JWT_SECRET_KEY
-    );
+    const token = jwtUtils.sign({ userId: user.id });
     return h
         .response({ feedback: 'Login successful' })
         .code(200)
