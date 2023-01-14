@@ -47,4 +47,34 @@ export class Movement implements IMovement {
         this.walletDestinationId = walletDestinationId;
         this.walletOriginId = walletOriginId;
     }
+
+    static createInternalMovement(
+        description: string,
+        transactionValue: number,
+        newWalletValue: number
+    ) {
+        return new Movement(
+            description,
+            transactionValue,
+            newWalletValue,
+            MovementType.INTERNAL
+        );
+    }
+
+    static createExternalMovement(
+        description: string,
+        transactionValue: number,
+        newWalletValue: number,
+        walletOriginId?: string,
+        walletDestinationId?: string
+    ) {
+        return new Movement(
+            description,
+            transactionValue,
+            newWalletValue,
+            MovementType.EXTERNAL,
+            walletOriginId,
+            walletDestinationId
+        );
+    }
 }
