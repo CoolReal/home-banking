@@ -1,20 +1,26 @@
 import { Movement } from './movement';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export interface IMovementList {
     id: string;
     walletId: string;
+    createdAt: string;
+    updatedAt: string;
     movements: Movement[];
 }
 
 export class MovementList implements IMovementList {
     id: string;
     walletId: string;
+    createdAt: string;
+    updatedAt: string;
     movements: Movement[];
 
     constructor(walletId: string) {
-        this.id = uuidv4();
+        this.id = randomUUID();
         this.walletId = walletId;
+        this.createdAt = new Date(Date.now()).toISOString();
+        this.updatedAt = new Date(Date.now()).toISOString();
         this.movements = [];
     }
 }

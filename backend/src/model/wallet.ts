@@ -1,19 +1,25 @@
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export interface IWallet {
     id: string;
     userId: string;
-    funds: Number;
+    createdAt: string;
+    updatedAt: string;
+    funds: number;
 }
 
 export class Wallet implements IWallet {
     id: string;
     userId: string;
-    funds: Number;
+    createdAt: string;
+    updatedAt: string;
+    funds: number;
 
     constructor(userId: string) {
-        this.id = uuidv4();
+        this.id = randomUUID();
         this.userId = userId;
+        this.createdAt = new Date(Date.now()).toISOString();
+        this.updatedAt = new Date(Date.now()).toISOString();
         this.funds = 0;
     }
 }
