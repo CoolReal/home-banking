@@ -72,8 +72,29 @@ export async function getFunds(request: Request, h: ResponseToolkit) {
 }
 
 export async function addFunds(request: Request, h: ResponseToolkit) {
-    console.log(request.payload);
-    return h.response('addFunds').code(200);
+    const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
+    await db.read();
+    if (!db.data) {
+        return h.response({ feedback: 'Database error' }).code(500);
+    }
+    const walletCheck = db.data.wallets.filter(
+        (wallet) => wallet.userId === userId
+    );
+    if (walletCheck.length === 0) {
+        return h.response({ feedback: 'Wallet not found' }).code(404);
+    }
+
+    const userWallet = walletCheck[0];
+    userWallet.funds += (<any>request.payload).funds;
+    const index = db.data.wallets.findIndex(
+        (wallet) => wallet.id === userWallet.id
+    );
+    db.data.wallets[index] = userWallet;
+    await db.write();
+
+    return h
+        .response({ feedback: 'Added funds', funds: userWallet.funds })
+        .code(200);
 }
 
 export async function removeFunds(request: Request, h: ResponseToolkit) {
