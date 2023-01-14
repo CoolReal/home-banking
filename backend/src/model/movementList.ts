@@ -1,5 +1,6 @@
 import { Movement } from './movement';
 import { randomUUID } from 'crypto';
+import { currentDateAsString } from '../utils';
 
 export interface IMovementList {
     id: string;
@@ -19,8 +20,8 @@ export class MovementList implements IMovementList {
     constructor(walletId: string) {
         this.id = randomUUID();
         this.walletId = walletId;
-        this.createdAt = new Date(Date.now()).toISOString();
-        this.updatedAt = new Date(Date.now()).toISOString();
+        this.createdAt = currentDateAsString();
+        this.updatedAt = this.createdAt;
         this.movements = [];
     }
 }

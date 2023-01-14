@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { currentDateAsString } from '../utils';
 
 export interface IMovement {
     id: string;
@@ -27,8 +28,8 @@ export class Movement implements IMovement {
         walletOriginId?: string
     ) {
         this.id = randomUUID();
-        this.createdAt = new Date(Date.now()).toISOString();
-        this.updatedAt = new Date(Date.now()).toISOString();
+        this.createdAt = currentDateAsString();
+        this.updatedAt = this.createdAt;
         this.description = description;
         this.transactionValue = transactionValue;
         this.walletDestinationId = walletDestinationId;

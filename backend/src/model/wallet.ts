@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { currentDateAsString } from '../utils';
 
 export interface IWallet {
     id: string;
@@ -18,8 +19,8 @@ export class Wallet implements IWallet {
     constructor(userId: string) {
         this.id = randomUUID();
         this.userId = userId;
-        this.createdAt = new Date(Date.now()).toISOString();
-        this.updatedAt = new Date(Date.now()).toISOString();
+        this.createdAt = currentDateAsString();
+        this.updatedAt = this.createdAt;
         this.funds = 0;
     }
 }
