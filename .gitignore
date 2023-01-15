@@ -58,3 +58,5 @@ typings/
 .idea
 
 
+# Angular
+/frontend/.angular/
