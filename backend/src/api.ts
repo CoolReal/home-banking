@@ -15,7 +15,7 @@ export async function databaseReset(request: Request, h: ResponseToolkit) {
 }
 
 export async function subscribe(request: Request, h: ResponseToolkit) {
-    const newUser = JSON.parse(<string>request.payload);
+    const newUser = <any>request.payload;
     await db.read();
     if (!db.data) {
         return h.response({ feedback: 'Database error' }).code(500);
@@ -36,7 +36,7 @@ export async function subscribe(request: Request, h: ResponseToolkit) {
 }
 
 export async function login(request: Request, h: ResponseToolkit) {
-    const { email, password } = JSON.parse(<string>request.payload);
+    const { email, password } = <any>request.payload;
     await db.read();
     if (!db.data) {
         return h.response({ feedback: 'Database error' }).code(500);
