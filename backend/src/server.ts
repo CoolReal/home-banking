@@ -3,6 +3,7 @@ import { Server } from '@hapi/hapi';
 import * as api from './api';
 import * as dotenv from 'dotenv';
 import { initDB } from './database';
+import Joi from 'joi';
 
 export let server: Server;
 
@@ -19,11 +20,14 @@ export const init = async function (): Promise<Server> {
         port: process.env.PORT || 4000,
         host: '0.0.0.0',
         routes: {
-            cors: true
-        }
+            cors: {
+              origin: ['*'],
+              exposedHeaders: ['Authorization']
+            },
+        },
     });
 
-    if (process.env.NODE_ENV === 'dev') {
+    if (process.env.NODE_ENV !== 'prod') {
         server.route({
             method: 'DELETE',
             path: '/delete',
@@ -74,4 +78,3 @@ process.on('unhandledRejection', (err) => {
     console.error(err);
     process.exit(1);
 });
-
