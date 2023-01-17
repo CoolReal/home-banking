@@ -2,12 +2,14 @@
     <button mat-button class="h-100">
         <mat-icon fontIcon="home" class="align-middle ps-1"
                   style="font-size: 2rem; height: 2rem; width: auto"></mat-icon>
-        <span class="mat pe-2 align-middle">Homebanking</span>
+        <span class="mat pe-2 align-middle" style="font-size: 1.5rem">Homebanking</span>
     </button>
 
     <span style="flex: auto"></span>
-    <button *ngIf="authService.isLoggedIn()" mat-button class="m-0 p-2 h-100" (click)="logout()">
-        <span>Logout</span>
-        <mat-icon fontIcon="logout" style="font-size: 1.5rem; height: 1.5rem; width: auto"></mat-icon>
+
+    <button *ngIf="authService.isLoggedIn()" mat-button class="h-100" (click)="logout()">
+        <mat-icon fontIcon="logout" class="align-middle ps-1"
+                  style="font-size: 2rem; height: 2rem; width: auto"></mat-icon>
+        <span class="mat pe-2 align-middle" style="font-size: 1.5rem">Logout</span>
     </button>
 </mat-toolbar>
