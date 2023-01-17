@@ -1,8 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { LoginComponent } from '../login/login.component';
-import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'homebanking-register',
@@ -10,25 +8,27 @@ import { MatButton } from '@angular/material/button';
     styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-    @Input()
-    loginButton!: MatButton;
+    @Output('showLogin') showLogin: EventEmitter<any> = new EventEmitter<any>();
+
     emailForm = new FormControl('', [Validators.required]);
     passwordForm = new FormControl('', [Validators.required]);
     nameForm = new FormControl();
 
     constructor(private authService: AuthService) {}
 
-    register(event: Event) {
-        event.preventDefault();
-        const value = this.authService
+    register() {
+        this.authService
             .register(
                 this.emailForm.value,
                 this.passwordForm.value,
                 this.nameForm.value
             )
-            .subscribe((data) => {
-                console.log(data);
-                this.loginButton._elementRef.nativeElement.click();
+            .subscribe(() => {
+                this.goToLogin();
             });
+    }
+
+    goToLogin() {
+        this.showLogin.emit();
     }
 }

@@ -1,11 +1,8 @@
-<div class="container" style="border: antiquewhite 5px">
-  <button mat-stroked-button (click)="showLogin()" #loginButton>Login</button>
-  <button mat-stroked-button (click)="showRegister()">Register</button>
-  <div>
-    <homebanking-register *ngIf="register" [loginButton]="loginButton">
-    </homebanking-register>
-    <homebanking-login *ngIf="login">
-    </homebanking-login>
-  </div>
+<div class="w-100 d-flex justify-content-center mt-5">
+    <div class="section p-2" style="width: 396px">
+        <homebanking-register (showLogin)="showLogin()" *ngIf="register">
+        </homebanking-register>
+        <homebanking-login (showRegister)="showRegister()" *ngIf="login">
+        </homebanking-login>
+    </div>
 </div>
-*

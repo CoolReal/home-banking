@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'homebanking-login',
@@ -9,15 +9,21 @@ import {Router} from "@angular/router";
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+    @Output('showRegister') showRegister: EventEmitter<any> =
+        new EventEmitter<any>();
+
     emailForm = new FormControl('', [Validators.required]);
     passwordForm = new FormControl('', [Validators.required]);
 
     constructor(private authService: AuthService, private router: Router) {}
 
-    login(event: Event) {
-        event.preventDefault();
+    login() {
         this.authService
             .login(this.emailForm.value, this.passwordForm.value)
             .subscribe(() => this.router.navigateByUrl('home'));
+    }
+
+    goToRegister() {
+        this.showRegister.emit();
     }
 }
