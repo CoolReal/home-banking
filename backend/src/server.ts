@@ -2,8 +2,7 @@ import Hapi from '@hapi/hapi';
 import { Server } from '@hapi/hapi';
 import * as api from './api';
 import * as dotenv from 'dotenv';
-import { initDB } from './database';
-import Joi from 'joi';
+import { db, initDB } from './database';
 
 export let server: Server;
 
@@ -21,29 +20,53 @@ export const init = async function (): Promise<Server> {
         host: '0.0.0.0',
         routes: {
             cors: {
-              origin: ['*'],
-              exposedHeaders: ['Authorization']
+                origin: ['*'],
+                exposedHeaders: ['Authorization'],
             },
         },
     });
+    await server.register(require('hapi-auth-jwt2'));
+    server.auth.strategy('jwt', 'jwt', {
+        key: process.env.JWT_SECRET_KEY,
+        validate: async (decoded: any) => {
+            await db.read();
+            if (!db.data) {
+                return { isValid: false };
+            }
+            return {
+                isValid: db.data.users.some((user) => user.id === decoded.userId),
+            };
+        },
+    });
+    server.auth.default('jwt');
 
     if (process.env.NODE_ENV !== 'prod') {
         server.route({
             method: 'DELETE',
             path: '/delete',
+            options: {
+                auth: false
+            },
             handler: api.databaseReset,
+
         });
     }
 
     server.route({
         method: 'POST',
         path: '/subscribe',
+        options: {
+            auth: false
+        },
         handler: api.subscribe,
     });
 
     server.route({
         method: 'POST',
         path: '/login',
+        options: {
+            auth: false
+        },
         handler: api.login,
     });
 
