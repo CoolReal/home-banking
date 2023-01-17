@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-    fundsForm: FormControl = new FormControl(0);
+    fundsForm: FormControl = new FormControl();
     wallet: any = {};
     @ViewChild('movementsComponent') movementsComponent!: MovementsComponent;
 

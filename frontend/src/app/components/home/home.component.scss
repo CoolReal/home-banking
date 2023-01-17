@@ -3,3 +3,16 @@
     background-color: white;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
+
+.fundsInput {
+    text-align: right
+}
+
+.fundsInput::-webkit-outer-spin-button, .fundsInput::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.fundsInput[type=number] {
+    -moz-appearance:textfield;
+}

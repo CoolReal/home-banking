@@ -10,9 +10,10 @@
             <div class="col-2"></div>
             <div class="col-3 section p-2 pb-0" style="min-width: 112px">
                 <div class="m-auto">
-                    <mat-form-field class="w-100" style="margin-bottom: -1rem !important">
-                        <mat-label>Manage funds</mat-label>
-                        <input matInput type="number" [formControl]="fundsForm">
+                    <mat-form-field class="w-100" style="margin-bottom: -1rem !important" floatLabel="always">
+                        <mat-label>Amount</mat-label>
+                        <input matInput type="number" [formControl]="fundsForm" placeholder="0" class="fundsInput">
+                        <span matTextSuffix=""> €</span>
                     </mat-form-field>
                 </div>
                 <div class="d-flex justify-content-between flex-wrap">
