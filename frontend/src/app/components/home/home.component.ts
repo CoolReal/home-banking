@@ -32,18 +32,28 @@ export class HomeComponent implements OnInit {
     depositFunds() {
         this.bankService
             .depositFunds(parseFloat(this.fundsForm.value))
-            .subscribe(() => {
-                this.getFunds();
-                this.movementsComponent.refreshMovements();
+            .subscribe({
+                next: () => {
+                    this.getFunds();
+                    this.movementsComponent.refreshMovements();
+                },
+                error: (error) => {
+                    alert(error.error.feedback);
+                },
             });
     }
 
     withdrawFunds() {
         this.bankService
             .withdrawFunds(parseFloat(this.fundsForm.value))
-            .subscribe(() => {
-                this.getFunds();
-                this.movementsComponent.refreshMovements();
+            .subscribe({
+                next: () => {
+                    this.getFunds();
+                    this.movementsComponent.refreshMovements();
+                },
+                error: (error) => {
+                    alert(error.error.feedback);
+                },
             });
     }
 

@@ -20,7 +20,14 @@ export class LoginComponent {
     login() {
         this.authService
             .login(this.emailForm.value, this.passwordForm.value)
-            .subscribe(() => this.router.navigateByUrl('home'));
+            .subscribe({
+                next: () => {
+                    this.router.navigateByUrl('home');
+                },
+                error: (error) => {
+                    alert(error.error.feedback);
+                },
+            });
     }
 
     goToRegister() {

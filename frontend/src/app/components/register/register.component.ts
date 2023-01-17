@@ -56,6 +56,7 @@ export class RegisterComponent {
         Validators.required,
         this.passwordValidator,
     ]);
+    nameForm = new FormControl();
     validConfirmPassword = true;
     emailError: any;
 
@@ -67,7 +68,11 @@ export class RegisterComponent {
         }
         this.emailError = null;
         this.authService
-            .register(this.emailForm.value, this.passwordForm.value, 'test')
+            .register(
+                this.emailForm.value,
+                this.passwordForm.value,
+                this.nameForm.value
+            )
             .subscribe({
                 error: (error) => {
                     alert(error.error.feedback);
