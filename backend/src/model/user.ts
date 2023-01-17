@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { currentDateAsString } from '../utils';
+import { currentDateAsUTCString } from '../utils';
 
 export interface IUser {
     id: string;
@@ -23,7 +23,7 @@ export class User implements IUser {
     constructor(email: string, password: string) {
         this.id = randomUUID();
         this.email = email;
-        this.createdAt = currentDateAsString();
+        this.createdAt = currentDateAsUTCString();
         this.updatedAt = this.createdAt;
         this.password = password;
     }

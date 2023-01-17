@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { currentDateAsString } from '../utils';
+import { currentDateAsUTCString } from '../utils';
 
 enum MovementType {
     INTERNAL = 'INTERNAL',
@@ -10,10 +10,9 @@ export interface IMovement {
     id: string;
     type: MovementType;
     createdAt: string;
-    updatedAt: string;
     description: string;
-    transactionValue: number;
-    newWalletValue: number;
+    transactionValue: string;
+    newWalletValue: string;
     walletOriginId?: string;
     walletDestinationId?: string;
 }
@@ -22,24 +21,22 @@ export class Movement implements IMovement {
     id: string;
     type: MovementType;
     createdAt: string;
-    updatedAt: string;
     description: string;
-    transactionValue: number;
-    newWalletValue: number;
+    transactionValue: string;
+    newWalletValue: string;
     walletDestinationId?: string;
     walletOriginId?: string;
 
     private constructor(
         description: string,
-        transactionValue: number,
-        newWalletValue: number,
+        transactionValue: string,
+        newWalletValue: string,
         type: MovementType,
         walletOriginId?: string,
         walletDestinationId?: string
     ) {
         this.id = randomUUID();
-        this.createdAt = currentDateAsString();
-        this.updatedAt = this.createdAt;
+        this.createdAt = currentDateAsUTCString();
         this.description = description;
         this.transactionValue = transactionValue;
         this.newWalletValue = newWalletValue;
@@ -50,8 +47,8 @@ export class Movement implements IMovement {
 
     static createInternalMovement(
         description: string,
-        transactionValue: number,
-        newWalletValue: number
+        transactionValue: string,
+        newWalletValue: string
     ) {
         return new Movement(
             description,
@@ -63,8 +60,8 @@ export class Movement implements IMovement {
 
     static createExternalMovement(
         description: string,
-        transactionValue: number,
-        newWalletValue: number,
+        transactionValue: string,
+        newWalletValue: string,
         walletOriginId?: string,
         walletDestinationId?: string
     ) {

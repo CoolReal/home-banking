@@ -4,7 +4,7 @@ import { User } from './model/user';
 import { Wallet } from './model/wallet';
 import { MovementList } from './model/movementList';
 import * as jwtUtils from './jwtUtils';
-import { currentDateAsString } from './utils';
+import { addValues, currentDateAsUTCString, setDecimalPlaces } from './utils';
 import { Movement } from './model/movement';
 
 export async function databaseReset(request: Request, h: ResponseToolkit) {
@@ -51,10 +51,12 @@ export async function login(request: Request, h: ResponseToolkit) {
         return h.response({ feedback: 'Incorrect credentials' }).code(401);
     }
     const token = jwtUtils.sign({ userId: user.id });
-    user.lastLogin = currentDateAsString();
+    user.lastLogin = currentDateAsUTCString();
+    const responseUser: any = { ...user };
+    delete responseUser.password;
     await db.write();
     return h
-        .response({ feedback: 'Login successful' })
+        .response({ feedback: 'Login successful', user: responseUser })
         .code(200)
         .header('Authorization', token);
 }
@@ -69,15 +71,14 @@ export async function getFunds(request: Request, h: ResponseToolkit) {
     if (!wallet) {
         return h.response({ feedback: 'Wallet not found' }).code(404);
     }
-    return h
-        .response({ feedback: 'Wallet found', funds: wallet.funds })
-        .code(200);
+    return h.response({ feedback: 'Wallet found', wallet: wallet }).code(200);
 }
 
 export async function addFunds(request: Request, h: ResponseToolkit) {
     const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
-    const transactionValue = (<any>request.payload).funds;
-    if (transactionValue <= 0) {
+    const transactionValue = setDecimalPlaces((<any>request.payload).funds);
+
+    if (parseFloat(transactionValue) <= 0) {
         return h.response({ feedback: 'Invalid transaction value' }).code(500);
     }
     await db.read();
@@ -88,21 +89,21 @@ export async function addFunds(request: Request, h: ResponseToolkit) {
     if (!wallet) {
         return h.response({ feedback: 'Wallet not found' }).code(404);
     }
-    wallet.funds += transactionValue;
+    wallet.funds = addValues(wallet.funds, transactionValue);
     const walletMovementList = db.data.movementLists.find(
         (list) => list.walletId === wallet.id
     );
     if (!walletMovementList) {
         return h.response({ feedback: 'Movement list not found' }).code(404);
     }
-    walletMovementList.movements.push(
+    walletMovementList.movements.unshift(
         Movement.createInternalMovement(
-            'Added funds',
+            'Deposited funds',
             transactionValue,
             wallet.funds
         )
     );
-    walletMovementList.updatedAt = currentDateAsString();
+    walletMovementList.updatedAt = currentDateAsUTCString();
     wallet.updatedAt = walletMovementList.updatedAt;
     const movementListIndex = db.data.wallets.findIndex(
         (temp) => temp.id === walletMovementList.id
@@ -121,8 +122,8 @@ export async function addFunds(request: Request, h: ResponseToolkit) {
 
 export async function removeFunds(request: Request, h: ResponseToolkit) {
     const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
-    const transactionValue = (<any>request.payload).funds;
-    if (transactionValue <= 0) {
+    const transactionValue = setDecimalPlaces((<any>request.query).funds);
+    if (parseFloat(transactionValue) <= 0) {
         return h.response({ feedback: 'Invalid transaction value' }).code(500);
     }
     await db.read();
@@ -134,8 +135,8 @@ export async function removeFunds(request: Request, h: ResponseToolkit) {
         return h.response({ feedback: 'Wallet not found' }).code(404);
     }
 
-    wallet.funds -= transactionValue;
-    if (wallet.funds < 0) {
+    wallet.funds = addValues(wallet.funds, -transactionValue);
+    if (parseFloat(wallet.funds) < 0) {
         return h.response({ feedback: 'Not enough funds' }).code(401);
     }
     const walletMovementList = db.data.movementLists.find(
@@ -144,14 +145,14 @@ export async function removeFunds(request: Request, h: ResponseToolkit) {
     if (!walletMovementList) {
         return h.response({ feedback: 'Movement list not found' }).code(404);
     }
-    walletMovementList.movements.push(
+    walletMovementList.movements.unshift(
         Movement.createInternalMovement(
-            'Removed funds',
-            -transactionValue,
+            'Withdrew funds',
+            setDecimalPlaces(-parseFloat(transactionValue)),
             wallet.funds
         )
     );
-    walletMovementList.updatedAt = currentDateAsString();
+    walletMovementList.updatedAt = currentDateAsUTCString();
     wallet.updatedAt = walletMovementList.updatedAt;
     const movementListIndex = db.data.wallets.findIndex(
         (temp) => temp.id === walletMovementList.id

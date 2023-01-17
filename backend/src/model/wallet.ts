@@ -1,12 +1,12 @@
 import { randomUUID } from 'crypto';
-import { currentDateAsString } from '../utils';
+import { currentDateAsUTCString } from '../utils';
 
 export interface IWallet {
     id: string;
     userId: string;
     createdAt: string;
     updatedAt: string;
-    funds: number;
+    funds: string;
 }
 
 export class Wallet implements IWallet {
@@ -14,13 +14,13 @@ export class Wallet implements IWallet {
     userId: string;
     createdAt: string;
     updatedAt: string;
-    funds: number;
+    funds: string;
 
     constructor(userId: string) {
         this.id = randomUUID();
         this.userId = userId;
-        this.createdAt = currentDateAsString();
+        this.createdAt = currentDateAsUTCString();
         this.updatedAt = this.createdAt;
-        this.funds = 0;
+        this.funds = "0.00";
     }
 }
