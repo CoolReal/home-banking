@@ -17,7 +17,7 @@ export class AuthService {
         const url = environment.apiUrl + 'subscribe';
         return this.http.post(url, { email, password, name }).pipe(
             catchError((error) => {
-                return throwError(() => new Error(error));
+                return throwError(error)
             })
         );
     }

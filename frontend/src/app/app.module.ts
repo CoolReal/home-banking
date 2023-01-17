@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MovementsComponent } from './components/movements/movements.component';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { MatListModule } from '@angular/material/list';
         MatTableModule,
         MatPaginatorModule,
         MatListModule,
+        MatTooltipModule,
     ],
     providers: [],
     bootstrap: [RootComponent],

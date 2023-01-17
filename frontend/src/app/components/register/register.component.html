@@ -2,20 +2,33 @@
     <mat-form-field class="w-100">
         <mat-label>Email</mat-label>
         <input type="email" matInput placeholder="example@example.com" [formControl]="emailForm">
+        <mat-error *ngIf="emailForm.invalid">{{"Email is invalid"}}</mat-error>
     </mat-form-field>
     <mat-form-field class="w-100">
         <mat-label>Password</mat-label>
-        <input type="password" matInput [formControl]="passwordForm">
-        <mat-icon matSuffix fontIcon="visibility"></mat-icon>
+        <input [type]="hidePassword ? 'password' : 'text'" matInput [formControl]="passwordForm">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="passwordForm.invalid" matTooltip="{{passwordErrorMessage()}}"
+                   matTooltipClass="multiline-tooltip">
+            Invalid password, hover to check requirements
+        </mat-error>
     </mat-form-field>
-    <mat-form-field class="w-100">
+    <!--<mat-form-field class="w-100">
         <mat-label>Confirm Password</mat-label>
-        <input type="password" matInput [formControl]="passwordForm">
-        <mat-icon matSuffix fontIcon="visibility"></mat-icon>
-    </mat-form-field>
+        <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput [formControl]="passwordForm"
+               #confirmPasswordInput>
+        <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hideConfirmPassword">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>-->
     <mat-form-field class="w-100">
         <mat-label>Name</mat-label>
-        <input type="text" matInput placeholder="John Doe" [formControl]="nameForm">
+        <input type="text" matInput>
     </mat-form-field>
     <p class="mandatoryMarker">* fields are mandatory</p>
     <div class="d-flex justify-content-center mb-2">
