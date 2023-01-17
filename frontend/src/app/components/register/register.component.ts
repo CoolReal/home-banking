@@ -6,11 +6,11 @@ const emailValidation = require('email-validator');
 const passwordValidation = require('password-validator');
 
 const errorMessages: any = {
-    min: 'Must have atleast 8 characters',
-    uppercase: 'Must have atleast 1 uppercase character',
-    lowercase: 'Must have atleast 1 lowercase character',
-    digits: 'Must have atleast 1 digit',
-    symbols: 'Must have atleast 1 symbol',
+    min: '8 characters',
+    uppercase: '1 uppercase character',
+    lowercase: '1 lowercase character',
+    digits: '1 digit',
+    symbols: '1 symbol',
 };
 
 @Component({
@@ -85,10 +85,13 @@ export class RegisterComponent {
     }
 
     passwordErrorMessage() {
-        let message = '';
+        let message = 'Must have atleast';
         for (let errorsKey in this.passwordForm.errors) {
-            message += `${this.passwordForm.errors[errorsKey]}; `;
+            if (errorsKey === 'required') {
+                continue;
+            }
+            message += ` ${this.passwordForm.errors[errorsKey]},`;
         }
-        return message;
+        return message.substring(0, message.length - 1);
     }
 }
