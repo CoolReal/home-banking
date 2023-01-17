@@ -12,13 +12,13 @@
             <td mat-cell *matCellDef="let movement"> {{movement.description}} </td>
         </ng-container>
         <ng-container matColumnDef="transactionValue">
-            <th mat-header-cell *matHeaderCellDef style="width: 16%"> Amount (EUR)</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 16%; text-align: right"> Amount (EUR)</th>
             <td mat-cell *matCellDef="let movement" class="text-end"><span
                 [style.color]="movement.transactionValue < 0 ? '#dc3545' : '#198754'">{{movement.transactionValue}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="newWalletValue">
-            <th mat-header-cell *matHeaderCellDef style="width: 22%"> Wallet balance (EUR)</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 22%; text-align: right"> Wallet balance (EUR)</th>
             <td mat-cell *matCellDef="let movement" class="text-end"> {{movement.newWalletValue}}</td>
         </ng-container>
         <ng-container matColumnDef="createdAt">

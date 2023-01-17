@@ -5,3 +5,19 @@
     right: 0;
     z-index: 999;
 }
+
+.buttonIcon {
+    font-size: 1.5rem !important;
+    height: 1.5rem !important;
+    width: auto !important
+}
+
+.buttonText {
+    font-size: 1.2rem !important;
+}
+
+@media only screen and (max-width: 776px) {
+    .buttonText {
+        display: none;
+    }
+}
