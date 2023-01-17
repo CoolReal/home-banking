@@ -2,10 +2,12 @@
     <div class="w-50">
         <div class="mat-headline-5 my-4">{{greeting()}}</div>
         <div class="row my-3">
-            <div class="col-7 section p-2">
+            <div class="col-7 section p-2 d-flex justify-content-between" style="flex-direction: column">
                 <p>Wallet: {{wallet.id}}</p>
-                <p>{{wallet.funds}} €</p>
-                <p>Current balance</p>
+                <div>
+                    <p class="mb-0" style="font-size: 1.2rem">{{wallet.funds}} €</p>
+                    <p class="mb-0" style="font-size:0.8rem">Current balance</p>
+                </div>
             </div>
             <div class="col-2"></div>
             <div class="col-3 section p-2 pb-0" style="min-width: 112px">
