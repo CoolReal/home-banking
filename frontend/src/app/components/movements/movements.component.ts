@@ -45,7 +45,6 @@ export class MovementsComponent implements OnInit, OnDestroy, AfterViewInit {
                 takeUntil(this.destroy$)
             )
             .subscribe();
-        this.refreshButton._elementRef.nativeElement.click();
     }
 
     refreshMovements() {
