@@ -25,7 +25,7 @@ export async function subscribe(request: Request, h: ResponseToolkit) {
             .response({ feedback: 'This email is already in use.' })
             .code(409);
     }
-    const user = new User(newUser.email, newUser.password);
+    const user = new User(newUser.email, newUser.password, newUser.name);
     const wallet = new Wallet(user.id);
     const movementList = new MovementList(wallet.id);
     db.data.users.push(user);

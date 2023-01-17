@@ -20,9 +20,10 @@ export class User implements IUser {
     lastLogin?: string;
     name?: string;
 
-    constructor(email: string, password: string) {
+    constructor(email: string, password: string, name?: string) {
         this.id = randomUUID();
         this.email = email;
+        this.name = name?.trim();
         this.createdAt = currentDateAsUTCString();
         this.updatedAt = this.createdAt;
         this.password = password;
