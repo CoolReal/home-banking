@@ -1,6 +1,7 @@
-import Hapi from '@hapi/hapi';
-import { Server } from '@hapi/hapi';
-import * as api from './api';
+import Hapi, { Server } from '@hapi/hapi';
+import * as devAPI from './api/dev';
+import * as accountAPI from './api/account';
+import * as bankAPI from './api/bank';
 import * as dotenv from 'dotenv';
 import { db, initDB } from './database';
 
@@ -34,7 +35,9 @@ export const init = async function (): Promise<Server> {
                 return { isValid: false };
             }
             return {
-                isValid: db.data.users.some((user) => user.id === decoded.userId),
+                isValid: db.data.users.some(
+                    (user) => user.id === decoded.userId
+                ),
             };
         },
     });
@@ -45,10 +48,9 @@ export const init = async function (): Promise<Server> {
             method: 'DELETE',
             path: '/delete',
             options: {
-                auth: false
+                auth: false,
             },
-            handler: api.databaseReset,
-
+            handler: devAPI.databaseReset,
         });
     }
 
@@ -56,42 +58,42 @@ export const init = async function (): Promise<Server> {
         method: 'POST',
         path: '/subscribe',
         options: {
-            auth: false
+            auth: false,
         },
-        handler: api.subscribe,
+        handler: accountAPI.subscribe,
     });
 
     server.route({
         method: 'POST',
         path: '/login',
         options: {
-            auth: false
+            auth: false,
         },
-        handler: api.login,
+        handler: accountAPI.login,
     });
 
     server.route({
         method: 'GET',
         path: '/funds',
-        handler: api.getFunds,
+        handler: bankAPI.getFunds,
     });
 
     server.route({
         method: 'PUT',
         path: '/funds',
-        handler: api.addFunds,
+        handler: bankAPI.addFunds,
     });
 
     server.route({
         method: 'DELETE',
         path: '/funds',
-        handler: api.removeFunds,
+        handler: bankAPI.removeFunds,
     });
 
     server.route({
         method: 'GET',
         path: '/movements',
-        handler: api.getMovements,
+        handler: bankAPI.getMovements,
     });
 
     return server;
