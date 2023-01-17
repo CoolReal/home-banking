@@ -1,1 +1,35 @@
-<p>home works!</p>
+<div class="w-100 d-flex justify-content-center">
+    <div class="w-50">
+        <div class="mat-headline-5 my-4">{{greeting()}}</div>
+        <div class="row my-3">
+            <div class="col-7 section p-2">
+                <p>Wallet: {{wallet.id}}</p>
+                <p>{{wallet.funds}} €</p>
+                <p>Current balance</p>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-3 section p-2 pb-0" style="min-width: 112px">
+                <div class="m-auto">
+                    <mat-form-field class="w-100" style="margin-bottom: -1rem !important">
+                        <mat-label>Manage funds</mat-label>
+                        <input matInput type="number" [formControl]="fundsForm">
+                    </mat-form-field>
+                </div>
+                <div class="d-flex justify-content-between flex-wrap">
+                    <button mat-stroked-button color="primary" class="mb-2" style="font-size: 0.8rem"
+                            (click)="depositFunds()">
+                        Deposit
+                    </button>
+                    <button mat-stroked-button color="primary" class="mb-2" style="font-size: 0.8rem"
+                            (click)="withdrawFunds()">
+                        Withdraw
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row section my-3 p-2">
+            <homebanking-movements #movementsComponent style="padding: 0"></homebanking-movements>
+        </div>
+    </div>
+</div>
+

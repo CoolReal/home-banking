@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
     providedIn: 'root',
 })
 export class AuthService {
+    public user: any;
     private authHeader?: string;
 
     constructor(private http: HttpClient, private router: Router) {}
@@ -30,11 +31,16 @@ export class AuthService {
                     const header = res.headers.get('Authorization');
                     if (header) {
                         this.authHeader = header;
+                        this.user = res.body.user;
                         return { success: true };
                     }
                     return { success: false, feedback: <string>res.body };
                 })
             );
+    }
+
+    getAuthHeader() {
+        return { Authorization: <string>this.authHeader };
     }
 
     isLoggedIn() {

@@ -16,6 +16,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { MainComponent } from './components/main/main.component';
 import { HomeComponent } from './components/home/home.component';
 import { RootComponent } from './components/root/root.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MovementsComponent } from './components/movements/movements.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
     declarations: [
@@ -25,6 +29,7 @@ import { RootComponent } from './components/root/root.component';
         MainComponent,
         HomeComponent,
         RootComponent,
+        MovementsComponent,
     ],
     imports: [
         BrowserModule,
@@ -37,6 +42,9 @@ import { RootComponent } from './components/root/root.component';
         MatButtonModule,
         MatInputModule,
         ReactiveFormsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatListModule,
     ],
     providers: [],
     bootstrap: [RootComponent],
