@@ -8,12 +8,15 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./root.component.scss'],
 })
 export class RootComponent implements OnInit {
-    constructor(private router: Router, private authService: AuthService) {}
+    constructor(private router: Router, private authService: AuthService) {
+        this.authService
+            .login('nrcsilva2001@gmail.com', 'askjdhashjdaojd')
+            .subscribe();
+    }
 
     ngOnInit(): void {
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
-                console.log(event);
                 if (event.url === '/' && this.authService.isLoggedIn()) {
                     this.router.navigateByUrl('home');
                 }
