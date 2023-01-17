@@ -168,3 +168,27 @@ export async function removeFunds(request: Request, h: ResponseToolkit) {
         .response({ feedback: 'Removed funds', funds: wallet.funds })
         .code(200);
 }
+
+export async function getMovements(request: Request, h: ResponseToolkit) {
+    const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
+    await db.read();
+    if (!db.data) {
+        return h.response({ feedback: 'Database error' }).code(500);
+    }
+    const wallet = db.data.wallets.find((wallet) => wallet.userId === userId);
+    if (!wallet) {
+        return h.response({ feedback: 'Wallet not found' }).code(404);
+    }
+    const movementList = db.data.movementLists.find(
+        (list) => list.walletId === wallet.id
+    );
+    if (!movementList) {
+        return h.response({ feedback: 'Movement list not found' }).code(404);
+    }
+    return h
+        .response({
+            feedback: 'Movement list found',
+            movementList: movementList,
+        })
+        .code(200);
+}

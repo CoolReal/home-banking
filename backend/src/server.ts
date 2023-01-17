@@ -88,6 +88,12 @@ export const init = async function (): Promise<Server> {
         handler: api.removeFunds,
     });
 
+    server.route({
+        method: 'GET',
+        path: '/movements',
+        handler: api.getMovements,
+    });
+
     return server;
 };
 
