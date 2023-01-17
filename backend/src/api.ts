@@ -6,6 +6,7 @@ import { MovementList } from './model/movementList';
 import * as jwtUtils from './jwtUtils';
 import { addValues, currentDateAsUTCString, setDecimalPlaces } from './utils';
 import { Movement } from './model/movement';
+import * as bcrypt from 'bcrypt';
 
 export async function databaseReset(request: Request, h: ResponseToolkit) {
     db.data = DATABASE_DEFAULT;
@@ -25,7 +26,9 @@ export async function subscribe(request: Request, h: ResponseToolkit) {
             .response({ feedback: 'This email is already in use.' })
             .code(409);
     }
-    const user = new User(newUser.email, newUser.password, newUser.name);
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(newUser.password, salt);
+    const user = new User(newUser.email, hashedPassword, newUser.name);
     const wallet = new Wallet(user.id);
     const movementList = new MovementList(wallet.id);
     db.data.users.push(user);
@@ -47,7 +50,7 @@ export async function login(request: Request, h: ResponseToolkit) {
             .response({ feedback: 'This account does not exist' })
             .code(404);
     }
-    if (user.password !== password) {
+    if (!await bcrypt.compare(password, user.password)) {
         return h.response({ feedback: 'Incorrect credentials' }).code(401);
     }
     const token = jwtUtils.sign({ userId: user.id });
