@@ -1,5 +1,9 @@
 # Endpoints
 
+Endpoints that do not require authentication are marked with a `*`. The remaining endpoints check the
+header `Authorization` for a valid JWT token that contains the user identifier. This token
+is obtained through login.
+
 ### POST*: subscribe
 
 Create a new user account, does not validate password strength or email validity.
