@@ -79,6 +79,7 @@ export class RegisterComponent {
             .subscribe({
                 next: () => {
                     this.registerButtonEnabled = true;
+                    this.goToLogin();
                 },
                 error: (error) => {
                     this.registerButtonEnabled = true;
