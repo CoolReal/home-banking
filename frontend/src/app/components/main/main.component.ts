@@ -6,16 +6,16 @@ import { Component } from '@angular/core';
     styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
-    login: boolean = true;
-    register: boolean = false;
+    showLogin: boolean = true;
+    showRegister: boolean = false;
 
-    showLogin() {
-        this.login = true;
-        this.register = false;
+    goToLogin() {
+        this.showLogin = true;
+        this.showRegister = false;
     }
 
-    showRegister() {
-        this.login = false;
-        this.register = true;
+    goToRegister() {
+        this.showLogin = false;
+        this.showRegister = true;
     }
 }

@@ -1,8 +1,8 @@
 <div class="w-100 d-flex justify-content-center mt-5">
     <div class="section p-2" style="width: 396px">
-        <homebanking-register (showLogin)="showLogin()" *ngIf="register">
+        <homebanking-register (showLogin)="goToLogin()" *ngIf="showRegister">
         </homebanking-register>
-        <homebanking-login (showRegister)="showRegister()" *ngIf="login">
+        <homebanking-login (showRegister)="goToRegister()" *ngIf="showLogin">
         </homebanking-login>
     </div>
 </div>

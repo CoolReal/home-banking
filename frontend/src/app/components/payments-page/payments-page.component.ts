@@ -24,21 +24,21 @@ export class PaymentsPageComponent implements AfterViewInit, OnDestroy {
         'newWalletValue',
     ];
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild('paymentsRefresh') refreshButton!: MatButton;
+    paymentButtonEnabled = true;
 
     referenceForm: FormControl = new FormControl();
     entityForm: FormControl = new FormControl();
     fundsForm: FormControl = new FormControl();
 
-    @ViewChild('paymentsRefresh') refreshButton!: MatButton;
-
     constructor(private bankService: BankService, private router: Router) {}
 
     ngAfterViewInit() {
+        //Prevents button click spam
         fromEvent(this.refreshButton._elementRef.nativeElement, 'click')
             .pipe(
                 debounceTime(250),
                 tap(() => {
-                    console.log('refreshing test');
                     this.refreshPayments();
                 }),
                 takeUntil(this.destroy$)
@@ -52,6 +52,7 @@ export class PaymentsPageComponent implements AfterViewInit, OnDestroy {
     }
 
     makePayment() {
+        this.paymentButtonEnabled = false;
         this.bankService
             .makePayment(
                 this.entityForm.value,
@@ -64,11 +65,13 @@ export class PaymentsPageComponent implements AfterViewInit, OnDestroy {
                     this.referenceForm.reset();
                     this.entityForm.reset();
                     this.fundsForm.reset();
+                    this.paymentButtonEnabled = true;
                 },
                 error: (error) => {
-                    alert(error.error.feedback);
+                    this.paymentButtonEnabled = true;
                     this.fundsForm.reset();
-                }
+                    alert(error.error.feedback);
+                },
             });
     }
 
@@ -81,7 +84,8 @@ export class PaymentsPageComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    mapPayments(payments: any) {
+    //Map payment objects to better display on the table
+    private mapPayments(payments: any) {
         return payments.map((payment: any) => {
             payment.createdAt = new Date(payment.createdAt).toLocaleString();
             payment.transactionValue =

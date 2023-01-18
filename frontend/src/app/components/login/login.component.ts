@@ -14,18 +14,22 @@ export class LoginComponent {
 
     emailForm = new FormControl('', [Validators.required]);
     passwordForm = new FormControl('', [Validators.required]);
+    loginButtonEnabled = true;
 
     constructor(private authService: AuthService, private router: Router) {}
 
     login() {
+        this.loginButtonEnabled = false;
         this.authService
             .login(this.emailForm.value, this.passwordForm.value)
             .subscribe({
                 next: () => {
                     this.router.navigateByUrl('home');
+                    this.loginButtonEnabled = true;
                 },
                 error: (error) => {
-                    alert(error.error.feedback);
+                    this.loginButtonEnabled = true;
+                    alert(error.error.feedback)
                 },
             });
     }

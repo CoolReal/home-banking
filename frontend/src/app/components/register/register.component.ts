@@ -49,6 +49,7 @@ export class RegisterComponent {
         }
         return this.passwordSchema.validate(c.value) ? null : test;
     };
+
     @ViewChild('confirmPasswordInput') confirmPasswordInput!: HTMLInputElement;
     @Output('showLogin') showLogin: EventEmitter<any> = new EventEmitter<any>();
     emailForm = new FormControl('', [Validators.required, this.emailValidator]);
@@ -58,6 +59,7 @@ export class RegisterComponent {
     ]);
     nameForm = new FormControl();
     validConfirmPassword = true;
+    registerButtonEnabled = true;
     emailError: any;
 
     constructor(private authService: AuthService) {}
@@ -66,6 +68,7 @@ export class RegisterComponent {
         if (this.emailForm.errors || this.passwordForm.errors) {
             return;
         }
+        this.registerButtonEnabled = false;
         this.emailError = null;
         this.authService
             .register(
@@ -74,7 +77,11 @@ export class RegisterComponent {
                 this.nameForm.value
             )
             .subscribe({
+                next: () => {
+                    this.registerButtonEnabled = true;
+                },
                 error: (error) => {
+                    this.registerButtonEnabled = true;
                     alert(error.error.feedback);
                 },
             });

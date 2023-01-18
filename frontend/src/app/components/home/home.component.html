@@ -2,6 +2,7 @@
     <div class="w-75 fluid-main">
         <div class="mat-headline-3 my-4" style="min-width: 460px">{{greeting()}}</div>
         <div class="row my-3 g-0" style="min-width: 460px">
+            <!--Wallet section-->
             <div class="col-7 section p-3 d-flex justify-content-between" style="flex-direction: column">
                 <p class="mat-headline-6" style="font-weight: 400">Wallet: {{wallet.id}}</p>
                 <div>
@@ -9,7 +10,8 @@
                     <p class="mb-0" style="font-size:0.8rem">Current balance</p>
                 </div>
             </div>
-            <div class="col-2"></div>
+            <div class="col-2"></div><!--Spacer column-->
+            <!--Manage funds section-->
             <div class="col-3 section p-3 pb-0" style="min-width: 112px">
                 <div class="m-auto">
                     <mat-form-field class="w-100" style="margin-bottom: -1rem !important" floatLabel="always">
@@ -20,16 +22,17 @@
                 </div>
                 <div class="d-flex justify-content-between flex-wrap">
                     <button mat-stroked-button color="primary" class="mb-2" style="font-size: 0.8rem"
-                            (click)="depositFunds()">
+                            (click)="depositFunds()" [disabled]="!depositButtonEnabled">
                         Deposit
                     </button>
                     <button mat-stroked-button color="primary" class="mb-2" style="font-size: 0.8rem"
-                            (click)="withdrawFunds()">
+                            (click)="withdrawFunds()" [disabled]="!withdrawButtonEnabled">
                         Withdraw
                     </button>
                 </div>
             </div>
         </div>
+        <!--Movements table section-->
         <div class="row section my-3 p-3 g-0" style="min-width: 460px">
             <homebanking-movements #movementsComponent style="padding: 0"></homebanking-movements>
         </div>

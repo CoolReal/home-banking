@@ -47,6 +47,7 @@ export class MovementsComponent implements OnDestroy, AfterViewInit {
         });
     }
 
+    // Receives the entire movement list, joins all types of movements, makes their data better suited for table reading and then sorts by most recent
     private mapMovements(movementList: any) {
         const internalMovements = movementList.internalMovements;
         const transfers = movementList.transfers;

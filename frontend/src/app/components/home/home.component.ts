@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit {
     fundsForm: FormControl = new FormControl();
     wallet: any = {};
     @ViewChild('movementsComponent') movementsComponent!: MovementsComponent;
+    depositButtonEnabled = true;
+    withdrawButtonEnabled = true;
 
     constructor(
         private bankService: BankService,
@@ -30,6 +32,7 @@ export class HomeComponent implements OnInit {
     }
 
     depositFunds() {
+        this.depositButtonEnabled = false;
         this.bankService
             .depositFunds(parseFloat(this.fundsForm.value))
             .subscribe({
@@ -37,14 +40,17 @@ export class HomeComponent implements OnInit {
                     this.getFunds();
                     this.movementsComponent.refreshMovements();
                     this.fundsForm.reset();
+                    this.depositButtonEnabled = true;
                 },
                 error: (error) => {
+                    this.depositButtonEnabled = true;
                     alert(error.error.feedback);
-                },
+                }
             });
     }
 
     withdrawFunds() {
+        this.withdrawButtonEnabled = false;
         this.bankService
             .withdrawFunds(parseFloat(this.fundsForm.value))
             .subscribe({
@@ -52,10 +58,12 @@ export class HomeComponent implements OnInit {
                     this.getFunds();
                     this.movementsComponent.refreshMovements();
                     this.fundsForm.reset();
+                    this.withdrawButtonEnabled = true;
                 },
                 error: (error) => {
                     alert(error.error.feedback);
-                },
+                    this.withdrawButtonEnabled = true;
+                }
             });
     }
 

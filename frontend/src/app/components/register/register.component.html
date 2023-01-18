@@ -32,7 +32,7 @@
     </mat-form-field>
     <p class="mandatoryMarker">* fields are mandatory</p>
     <div class="d-flex justify-content-center mb-2">
-        <button mat-stroked-button class="w-100" color="primary" (click)="register()">Open account</button>
+        <button mat-stroked-button class="w-100" color="primary" (click)="register()" [disabled]="!registerButtonEnabled">Open account</button>
     </div>
     <mat-divider></mat-divider>
     <div class="d-flex justify-content-center mt-2">

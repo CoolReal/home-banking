@@ -25,6 +25,7 @@ export class TransfersPageComponent implements AfterViewInit {
     ];
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild('transfersRefresh') refreshButton!: MatButton;
+    transferButtonEnabled = true;
 
     recipientNameForm: FormControl = new FormControl();
     recipientEmailForm: FormControl = new FormControl();
@@ -35,6 +36,7 @@ export class TransfersPageComponent implements AfterViewInit {
     constructor(private bankService: BankService, private router: Router) {}
 
     ngAfterViewInit() {
+        //Prevents button click spam
         fromEvent(this.refreshButton._elementRef.nativeElement, 'click')
             .pipe(
                 debounceTime(250),
@@ -52,6 +54,7 @@ export class TransfersPageComponent implements AfterViewInit {
     }
 
     makeTransfer() {
+        this.transferButtonEnabled = false;
         this.bankService
             .makeTransfer(this.walletIDForm.value, this.fundsForm.value, {
                 recipientName: this.recipientNameForm.value,
@@ -66,10 +69,12 @@ export class TransfersPageComponent implements AfterViewInit {
                     this.walletIDForm.reset();
                     this.descriptionForm.reset();
                     this.fundsForm.reset();
+                    this.transferButtonEnabled = true;
                 },
                 error: (error) => {
-                    alert(error.error.feedback);
+                    this.transferButtonEnabled = true;
                     this.fundsForm.reset();
+                    alert(error.error.feedback);
                 },
             });
     }
@@ -83,7 +88,8 @@ export class TransfersPageComponent implements AfterViewInit {
         });
     }
 
-    mapTransfers(transfers: any) {
+    //Map transfer objects to better display on the table
+    private mapTransfers(transfers: any) {
         return transfers.map((transfer: any) => {
             transfer.createdAt = new Date(transfer.createdAt).toLocaleString();
             transfer.transactionValue =

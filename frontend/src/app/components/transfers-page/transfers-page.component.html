@@ -2,6 +2,7 @@
     <div class="w-75 my-4 fluid-main">
         <a style="color: #ff4081" (click)="goToHome()">< Back to home page</a>
         <div class="mat-headline-3 my-4" style="min-width: 460px">Account tranfer</div>
+        <!--Make transfers section-->
         <div class="row section w-100 p-3 g-0">
             <div class="w-50 pe-4">
                 <div class="field-wrapper">
@@ -38,12 +39,13 @@
                     </mat-form-field>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button mat-stroked-button color="primary" class="w-50 mt-2" (click)="makeTransfer()">Confirm
+                    <button mat-stroked-button color="primary" class="w-50 mt-2" (click)="makeTransfer()" [disabled]="!transferButtonEnabled">Confirm
                         Transfer
                     </button>
                 </div>
             </div>
         </div>
+        <!--Transfer table section-->
         <div class="row section my-3 p-3 g-0" style="min-width: 460px">
             <div class="d-flex justify-content-between">
                 <span class="mat-headline-4 mb-3 ps-2">Transfers</span>

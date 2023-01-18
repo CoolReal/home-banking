@@ -9,7 +9,7 @@
     </mat-form-field>
 
     <div class="d-flex justify-content-center mb-2">
-        <button mat-stroked-button class="w-100" color="primary" (click)="login()">Login</button>
+        <button mat-stroked-button class="w-100" color="primary" (click)="login()" [disabled]="!loginButtonEnabled">Login</button>
     </div>
     <mat-divider></mat-divider>
     <div class="d-flex justify-content-center mt-2">
