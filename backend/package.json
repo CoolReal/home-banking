@@ -4,7 +4,6 @@
     "description": "Homebanking System",
     "main": "lib/main.js",
     "scripts": {
-        "postinstall": "patch-package",
         "dev:tsc": "tsc --watch -p .",
         "dev:serve": "NODE_ENV=dev nodemon -e js -w lib lib/main.js",
         "dev": "run-p dev:*",
