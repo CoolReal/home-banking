@@ -3,12 +3,14 @@ import { IWallet } from './model/wallet';
 import { IMovementList } from './model/movementList';
 import { JSONFile, Low } from '@commonify/lowdb';
 
+//Database schema for type checking
 export interface Schema {
     users: IUser[];
     wallets: IWallet[];
     movementLists: IMovementList[];
 }
 
+//Default database state
 export const DATABASE_DEFAULT = {
     users: [],
     wallets: [],
@@ -39,6 +41,8 @@ export async function initDB() {
     const pathString = `${path.join('\\')}\\${dbFileName}.json`;
     const adapter = new JSONFile<Schema>(pathString);
     db = new Low(adapter);
+
+    //Set default database state if empty
     await db.read();
     if (!db.data) {
         db.data = DATABASE_DEFAULT;

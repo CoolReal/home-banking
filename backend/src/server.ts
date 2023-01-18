@@ -22,10 +22,11 @@ export const init = async function (): Promise<Server> {
         routes: {
             cors: {
                 origin: ['*'],
-                exposedHeaders: ['Authorization'],
+                exposedHeaders: ['Authorization'], //Allows Authorization header to be read by requests
             },
         },
     });
+
     await server.register(require('hapi-auth-jwt2'));
     server.auth.strategy('jwt', 'jwt', {
         key: process.env.JWT_SECRET_KEY,
@@ -38,7 +39,7 @@ export const init = async function (): Promise<Server> {
                 isValid: db.data.users.some(
                     (user) => user.id === decoded.userId
                 ),
-                credentials: {userId: decoded.userId}
+                credentials: {userId: decoded.userId} //Allows endpoints to access request.auth.credentials.userId
             };
         },
     });
@@ -106,7 +107,7 @@ export const init = async function (): Promise<Server> {
     server.route({
         method: 'GET',
         path: '/transfers',
-        handler: bankAPI.getTranfers,
+        handler: bankAPI.getTransfers,
     });
 
     server.route({
