@@ -19,7 +19,10 @@ and transfers between accounts.
 2. Rename `.env-example` file to `.env` and replace the `JWT_SECRET_KEY` variable value with your own.
 
 
-3. Ready to be run locally at http://localhost:4000 
+3. Create folder `database` in the project root (not repository root).
+
+
+4. Ready to be run locally at http://localhost:4000 
 
 ## Scripts
 
@@ -74,3 +77,7 @@ is obtained through login.
 API extras in development mode:
 
 - New endpoint `DELETE: DELETE` to reset `devDB.json` database file
+
+## Postman
+
+Postman request collection can be found in this [folder](postman/).
