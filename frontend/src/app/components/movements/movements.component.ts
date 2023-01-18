@@ -1,10 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,7 +10,7 @@ import { BankService } from '../../services/bank.service';
     templateUrl: './movements.component.html',
     styleUrls: ['./movements.component.scss'],
 })
-export class MovementsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MovementsComponent implements OnDestroy, AfterViewInit {
     private readonly destroy$ = new Subject();
     movements: any;
     dataSource: any = new MatTableDataSource();
@@ -31,10 +25,6 @@ export class MovementsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private bankService: BankService) {}
 
-    ngOnInit() {
-        this.refreshMovements();
-    }
-
     ngAfterViewInit() {
         fromEvent(this.refreshButton._elementRef.nativeElement, 'click')
             .pipe(
@@ -45,27 +35,32 @@ export class MovementsComponent implements OnInit, OnDestroy, AfterViewInit {
                 takeUntil(this.destroy$)
             )
             .subscribe();
+        this.refreshMovements();
     }
 
     refreshMovements() {
         this.bankService.getMovements().subscribe((data: any) => {
-            this.movements = this.mapMovements(
-                <any[]>data.movementList.movements
-            );
+            this.movements = this.mapMovements(<any[]>data.movementList);
             this.dataSource = new MatTableDataSource<any>(this.movements);
             this.dataSource.paginator = this.paginator;
             this.paginator.firstPage();
         });
     }
 
-    private mapMovements(movements: any) {
-        return movements.map((movement: any) => {
-            movement.createdAt = new Date(movement.createdAt).toLocaleString();
-            movement.transactionValue =
-                movement.transactionValue.toLocaleString();
-            movement.newWalletValue = movement.newWalletValue.toLocaleString();
+    private mapMovements(movementList: any) {
+        const internalMovements = movementList.internalMovements;
+        const transfers = movementList.transfers;
+        const payments = movementList.payments;
+        let allMovements = internalMovements.concat(transfers).concat(payments);
+        allMovements = allMovements.map((movement: any) => {
+            movement.newDate = new Date(movement.createdAt);
+            movement.createdAt = movement.newDate.toLocaleString();
             return movement;
         });
+        allMovements.sort((a: any, b: any) => {
+            return b.newDate.getTime() - a.newDate.getTime();
+        });
+        return allMovements;
     }
 
     ngOnDestroy(): void {

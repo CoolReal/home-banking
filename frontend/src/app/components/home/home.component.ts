@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
                 next: () => {
                     this.getFunds();
                     this.movementsComponent.refreshMovements();
+                    this.fundsForm.reset();
                 },
                 error: (error) => {
                     alert(error.error.feedback);
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit {
                 next: () => {
                     this.getFunds();
                     this.movementsComponent.refreshMovements();
+                    this.fundsForm.reset();
                 },
                 error: (error) => {
                     alert(error.error.feedback);

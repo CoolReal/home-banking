@@ -1,0 +1,35 @@
+.section {
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover{
+    color: #ff80ab;
+}
+
+@media only screen and (max-width: 776px) {
+    .fluid-main {
+        width: 100% !important;
+        padding: 0 10px
+    }
+}
+
+.field-wrapper {
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.fundsInput::-webkit-outer-spin-button, .fundsInput::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.fundsInput[type=number] {
+    -moz-appearance:textfield;
+}

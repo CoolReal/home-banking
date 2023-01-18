@@ -21,6 +21,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MovementsComponent } from './components/movements/movements.component';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TransfersPageComponent } from './components/transfers-page/transfers-page.component';
+import { PaymentsPageComponent } from './components/payments-page/payments-page.component';
+import { AccountPageComponent } from './components/account-page/account-page.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +34,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         HomeComponent,
         RootComponent,
         MovementsComponent,
+        TransfersPageComponent,
+        PaymentsPageComponent,
+        AccountPageComponent,
     ],
     imports: [
         BrowserModule,
