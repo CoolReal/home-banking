@@ -42,7 +42,7 @@ export async function initDB() {
     const adapter = new JSONFile<Schema>(pathString);
     db = new Low(adapter);
 
-    //Set default database state if empty
+    //Set default database state if it doesn't exist
     await db.read();
     if (!db.data) {
         db.data = DATABASE_DEFAULT;
