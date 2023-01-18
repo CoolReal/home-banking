@@ -1,5 +1,7 @@
 # Endpoints
 
+Request bodies must be in JSON format, response bodies are also in JSON format.
+
 Endpoints that do not require authentication are marked with a `*`. The remaining endpoints check the
 header `Authorization` for a valid JWT token that contains the user identifier. This token
 is obtained through login.
