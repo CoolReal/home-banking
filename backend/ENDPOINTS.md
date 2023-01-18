@@ -18,6 +18,8 @@ Response:
 |------------|----------|--------------------|
 | `feedback` |          | Operation feedback |
 
+------
+
 ### POST*: login
 
 Allow users to login and provides JWT token for auth.
@@ -38,6 +40,8 @@ Response:
 
 - Contains header `Authorization` with JWT token used for auth
 
+------
+
 ### GET: funds
 
 Get user's wallet.
@@ -50,6 +54,8 @@ Response:
 |------------|--------------------|----------------------------|
 | `feedback` |                    | Operation feedback         |
 | `wallet`   | <center>X</center> | User wallet, if successful |
+
+------
 
 ### PUT: funds
 
@@ -68,6 +74,8 @@ Response:
 | `feedback` |                    | Operation feedback                   |
 | `funds`    | <center>X</center> | New user wallet funds, if successful |
 
+------
+
 ### DELETE: funds?funds={amount}
 
 Remove funds from user's wallet.
@@ -85,6 +93,8 @@ Response:
 | `feedback` |                    | Operation feedback                   |
 | `funds`    | <center>X</center> | New user wallet funds, if successful |
 
+------
+
 ### GET: movements
 
 Get user's movements, includes internal movements, payments and transfers.
@@ -95,6 +105,8 @@ Response:
 |----------------|--------------------|-------------------------------------------------|
 | `feedback`     |                    | Operation feedback                              |
 | `movementList` | <center>X</center> | List with all the user movements, if successful |
+
+------
 
 ### GET: internalMovements
 
@@ -107,6 +119,8 @@ Response:
 | `feedback`          |                    | Operation feedback                                       |
 | `internalMovements` | <center>X</center> | List with all the user internal movements, if successful |
 
+------
+
 ### GET: transfers
 
 Get user's transfers.
@@ -118,6 +132,8 @@ Response:
 | `feedback`  |                    | Operation feedback                              |
 | `transfers` | <center>X</center> | List with all the user transfers, if successful |
 
+------
+
 ### GET: payments
 
 Get user's payments.
@@ -128,6 +144,8 @@ Response:
 |------------|--------------------|------------------------------------------------|
 | `feedback` |                    | Operation feedback                             |
 | `payments` | <center>X</center> | List with all the user payments, if successful |
+
+------
 
 ### POST: transfers
 
@@ -155,6 +173,8 @@ Response:
 |------------|--------------------|-----------------------------------------|
 | `feedback` |                    | Operation feedback                      |
 | `transfer` | <center>X</center> | Newly processed transfer, if successful |
+
+------
 
 ### POST: payments
 
