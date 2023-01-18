@@ -3,7 +3,7 @@ import { IWallet } from './model/wallet';
 import { IMovementList } from './model/movementList';
 import { JSONFile, Low } from '@commonify/lowdb';
 
-interface Schema {
+export interface Schema {
     users: IUser[];
     wallets: IWallet[];
     movementLists: IMovementList[];

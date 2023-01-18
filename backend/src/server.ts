@@ -96,6 +96,36 @@ export const init = async function (): Promise<Server> {
         handler: bankAPI.getMovements,
     });
 
+    server.route({
+        method: 'GET',
+        path: '/internalMovements',
+        handler: bankAPI.getInternalMovements,
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/transfers',
+        handler: bankAPI.getTranfers,
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/transfers',
+        handler: bankAPI.makeTransfer,
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/payments',
+        handler: bankAPI.getPayments,
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/payments',
+        handler: bankAPI.makePayment,
+    });
+
     return server;
 };
 

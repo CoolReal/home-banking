@@ -12,7 +12,7 @@ export interface IInternalMovement {
 export class InternalMovement implements IInternalMovement {
     id: string;
     createdAt: string;
-    description?: string;
+    description?: string = "No description provided";
     transactionValue: string;
     newWalletValue: string;
 
@@ -25,6 +25,6 @@ export class InternalMovement implements IInternalMovement {
         this.createdAt = currentDateAsUTCString();
         this.transactionValue = transactionValue;
         this.newWalletValue = newWalletValue;
-        this.description = description;
+        this.description = description ?? this.description;
     }
 }

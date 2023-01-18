@@ -3,6 +3,7 @@ import { IInternalMovement, InternalMovement } from './internalMovement';
 export interface IRecipientData {
     recipientEmail?: string;
     recipientName?: string;
+    description?: string
 }
 
 export interface ITransfer extends IInternalMovement, IRecipientData {
@@ -19,15 +20,14 @@ export class Transfer extends InternalMovement implements ITransfer {
     constructor(
         originWalletId: string,
         recipientWalletId: string,
-        description: string,
         transactionValue: string,
         newWalletValue: string,
-        recipientData: IRecipientData
+        recipientData?: IRecipientData
     ) {
-        super(transactionValue, newWalletValue, description);
+        super(transactionValue, newWalletValue, recipientData?.description?.trim());
         this.originWalletId = originWalletId;
         this.recipientWalletId = recipientWalletId;
-        this.recipientEmail = recipientData.recipientEmail;
-        this.recipientName = recipientData.recipientName;
+        this.recipientEmail = recipientData?.recipientEmail;
+        this.recipientName = recipientData?.recipientName;
     }
 }
