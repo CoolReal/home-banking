@@ -22,7 +22,10 @@ and transfers between accounts.
 3. Create folder `database` in the project root (not repository root).
 
 
-4. Ready to be run locally at http://localhost:4000 
+4. `npm run dev:tsc` for initial compile
+
+
+5. Ready to be run locally at http://localhost:4000
 
 ## Scripts
 
