@@ -293,6 +293,12 @@ export async function makePayment(request: Request, h: ResponseToolkit) {
             .response({ feedback: 'Missing transactionValue property' })
             .code(400);
     }
+    if (
+        parseFloat(transactionValue) <= 0 ||
+        isNaN(parseFloat(transactionValue))
+    ) {
+        return h.response({ feedback: 'Invalid transaction value' }).code(400);
+    }
 
     transactionValue = setDecimalPlaces(transactionValue);
     if (parseFloat(transactionValue) <= 0) {
@@ -359,6 +365,12 @@ export async function makeTransfer(request: Request, h: ResponseToolkit) {
         return h
             .response({ feedback: 'Missing transactionValue property' })
             .code(400);
+    }
+    if (
+        parseFloat(transactionValue) <= 0 ||
+        isNaN(parseFloat(transactionValue))
+    ) {
+        return h.response({ feedback: 'Invalid transaction value' }).code(400);
     }
     transactionValue = setDecimalPlaces(transactionValue);
     if (parseFloat(transactionValue) <= 0) {
