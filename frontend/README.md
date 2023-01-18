@@ -2,8 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
 
-Homebanking UI using the Homebanking API, allows for user register, login, mock deposits, mock withdraws, account
-transfers and mock service payments.
+Homebanking UI uses the Homebanking API and allows for user registration, check movements, do mock deposits and do mock withdraws, accounts transfers and do mock
+service payments.
 
 ## Setup
 

@@ -1,7 +1,7 @@
 # Homebanking API
 
-Homebanking API used for basic user wallet management, this includes mock deposits and mock withdraws, service payment
-and transfers between accounts.
+Homebanking API allows for user registration, check movements, do mock deposits and do mock withdraws, accounts transfers and do mock
+service payments.
 
 ## Technologies
 
