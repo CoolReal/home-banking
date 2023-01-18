@@ -7,7 +7,7 @@ import { updateMovementList, updateWallet } from './bankUtils';
 import { Transfer } from '../model/transfer';
 
 export async function getFunds(request: Request, h: ResponseToolkit) {
-    const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
+    const userId = request.auth.credentials.userId;
     await db.read();
     if (!db.data) {
         return h.response({ feedback: 'Database error' }).code(500);
@@ -21,7 +21,7 @@ export async function getFunds(request: Request, h: ResponseToolkit) {
 }
 
 export async function addFunds(request: Request, h: ResponseToolkit) {
-    const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
+    const userId = request.auth.credentials.userId;
     const transactionValue = setDecimalPlaces((<any>request.payload).funds);
 
     if (
@@ -61,7 +61,7 @@ export async function addFunds(request: Request, h: ResponseToolkit) {
 }
 
 export async function removeFunds(request: Request, h: ResponseToolkit) {
-    const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
+    const userId = <string>request.auth.credentials.userId;
     const transactionValue = setDecimalPlaces((<any>request.query).funds);
     if (
         parseFloat(transactionValue) <= 0 ||
@@ -108,7 +108,7 @@ export async function removeFunds(request: Request, h: ResponseToolkit) {
 }
 
 export async function getMovements(request: Request, h: ResponseToolkit) {
-    const { userId } = <any>jwtUtils.getPayload(request.headers.authorization);
+    const userId = <string>request.auth.credentials.userId;
     await db.read();
     if (!db.data) {
         return h.response({ feedback: 'Database error' }).code(500);

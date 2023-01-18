@@ -38,6 +38,7 @@ export const init = async function (): Promise<Server> {
                 isValid: db.data.users.some(
                     (user) => user.id === decoded.userId
                 ),
+                credentials: {userId: decoded.userId}
             };
         },
     });
